@@ -61,9 +61,10 @@ mongo
 sudo docker-compose exec shard0-replica0 /bin/bash
 cat /data/db/mongod.log
 ```
+* To view the Envoy proxy's collected runtime statistics, in a browser go to: [http://localhost:8001/stats](http://localhost:8001/stats)
+
 * To shutdown and remove all the Docker Compose project's running containers (ready for you to rebuild and run again), run:
 ```
 sudo docker-compose down
 ```
-* To view the Envoy proxy's collected runtime statistics, in a browser go to: [http://localhost:8001/stats](http://localhost:8001/stats)
 
