@@ -48,8 +48,8 @@ sudo docker-compose logs mongos-router0
 * To execute a terminal session directly in the Envoy proxy's container and then view the Envoy access logs for requests sent to the two Mongos processes, run:
 ```
 sudo docker-compose exec front-envoy /bin/bash
-cat /var/log/access0.log
-cat /var/log/access1.log
+cat /tmp/access0.log
+cat /tmp/access1.log
 ```
 * To execute a terminal session directly in one of the Mongos containers and then execute the Mongo Shell directly accessing the local Mongos process, run:
 ```

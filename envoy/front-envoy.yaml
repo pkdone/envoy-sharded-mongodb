@@ -7,17 +7,20 @@ static_resources:
     filter_chains:
     - filters:
       - name: envoy.mongo_proxy
-        config:
+        typed_config:
+          "@type": type.googleapis.com/envoy.extensions.filters.network.mongo_proxy.v3.MongoProxy
           stat_prefix: mongos_proxy0
-          access_log: /var/log/mongos_stats0.log
+          access_log: /tmp/mongos_stats0.log
       - name: envoy.tcp_proxy
-        config:
+        typed_config:
+          "@type": type.googleapis.com/envoy.extensions.filters.network.tcp_proxy.v3.TcpProxy
           stat_prefix: ingress_tcp0
           cluster: mongos0
           access_log:
             - name: envoy.file_access_log
-              config:
-                path: "/var/log/access0.log"
+              typed_config:
+                "@type": type.googleapis.com/envoy.extensions.access_loggers.file.v3.FileAccessLog
+                path: "/tmp/access0.log"
   - address:
       socket_address:
         address: 0.0.0.0
@@ -25,35 +28,48 @@ static_resources:
     filter_chains:
     - filters:
       - name: envoy.mongo_proxy
-        config:
+        typed_config:
+          "@type": type.googleapis.com/envoy.extensions.filters.network.mongo_proxy.v3.MongoProxy
           stat_prefix: mongos_proxy1
           access_log: /tmp/mongos_stats1.log
       - name: envoy.tcp_proxy
-        config:
+        typed_config:
+          "@type": type.googleapis.com/envoy.extensions.filters.network.tcp_proxy.v3.TcpProxy
           stat_prefix: ingress_tcp1
           cluster: mongos1
           access_log:
             - name: envoy.file_access_log
-              config:
-                path: "/var/log/access1.log"
-
+              typed_config:
+                "@type": type.googleapis.com/envoy.extensions.access_loggers.file.v3.FileAccessLog
+                path: "/tmp/access1.log"
+                
   clusters:
   - name: mongos0
     connect_timeout: 0.25s
     type: strict_dns
-    lb_policy: round_robin
-    hosts:
-    - socket_address:
-        address: mongos-router0
-        port_value: 27017
+    lb_policy: round_robin    
+    load_assignment:
+      cluster_name: mongos0_service
+      endpoints:
+      - lb_endpoints:
+        - endpoint:
+            address:
+              socket_address:
+                address: mongos-router0
+                port_value: 27017
   - name: mongos1
     connect_timeout: 0.25s
     type: strict_dns
     lb_policy: round_robin
-    hosts:
-    - socket_address:
-        address: mongos-router1
-        port_value: 27017
+    load_assignment:
+      cluster_name: mongos1_service
+      endpoints:
+      - lb_endpoints:
+        - endpoint:
+            address:
+              socket_address:
+                address: mongos-router1
+                port_value: 27017
 
 admin:
   access_log_path: "/dev/null"
