@@ -28,11 +28,12 @@ sudo docker-compose up --build -d
 ```
 sudo docker-compose ps
 ```
-3. Connect to the MongoDB cluster from the Mongo Shell (the Shell should connect to the first of the two configured Envoy proxy endpoints, which then connects to the first Mongos, which then connects to the Mongod shards):
+3. Connect to the MongoDB cluster from the MongoDB Shell (the Shell should connect to the first of the two configured Envoy proxy endpoints, which then connects to the first Mongos, which then connects to the Mongod shards):
 ```
-mongo --port 27000
+mongosh --port 27000
+```
+```
 sh.status()
-exit
 ```
 _Note_: Use port 27001 instead, above, if you want to connect to the second Envoy endpoint which will connect to the second Mongos. Attempting to configure Envoy to _load balance_ across the two Mongos proxies, to represent them as a _single_ endpoint, will break the MongoDB wire protocol communication between the Shell and the Mongos processes.
 
@@ -51,7 +52,7 @@ sudo docker-compose exec front-envoy /bin/bash
 cat /tmp/access0.log
 cat /tmp/access1.log
 ```
-* To execute a terminal session directly in one of the Mongos containers and then execute the Mongo Shell directly accessing the local Mongos process, run:
+* To execute a terminal session directly in one of the Mongos containers and then execute the MongoDB Shell directly accessing the local Mongos process, run:
 ```
 sudo docker-compose exec mongos-router0 /bin/bash
 mongo
