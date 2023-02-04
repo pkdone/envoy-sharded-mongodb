@@ -49,17 +49,23 @@ sudo docker-compose logs mongos-router0
 * To execute a terminal session directly in the Envoy proxy's container and then view the Envoy access logs for requests sent to the two Mongos processes, run:
 ```
 sudo docker-compose exec front-envoy /bin/bash
+```
+```
 cat /tmp/access0.log
 cat /tmp/access1.log
 ```
 * To execute a terminal session directly in one of the Mongos containers and then execute the MongoDB Shell directly accessing the local Mongos process, run:
 ```
 sudo docker-compose exec mongos-router0 /bin/bash
-mongo
+```
+```
+mongosh
 ```
 * To execute a terminal session directly in one of the Mongod containers and then view the Mongod process' logs, run:
 ```
 sudo docker-compose exec shard0-replica0 /bin/bash
+```
+```
 cat /data/db/mongod.log
 ```
 * To view the Envoy proxy's collected runtime statistics, in a browser go to: [http://localhost:8001/stats](http://localhost:8001/stats)
