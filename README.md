@@ -12,13 +12,16 @@ This example uses a [Docker](https://docs.docker.com/) [Compose](https://docs.do
 
 Each element in the topology (9 Mongod processes, 2 Mongos processes, 1 Envoy process) runs in its own Docker container and all the containers are visible to each other on the same _internal_ network. Once running, the MongoDB cluster is accessible directly from your laptop/PC, via localhost forwarded ports which connect to the Envoy proxy endpoints.
 
-# Prerequisites
-* Your Laptop/PC is running a recent version of Linux, Windows or Mac OS X
-* [Docker](https://docs.docker.com/install/) is already installed on your laptop/PC
-* [Docker Compose](https://docs.docker.com/compose/install/) is already installed on your laptop/PC
-* [MongoDB](https://docs.mongodb.com/manual/installation/) is already installed on your laptop/PC (to enable the Mongo Shell to be run directly from your laptop/PC)
 
-# Build, Run & Connect
+## Prerequisites
+
+* Your workstation is running a recent version of Linux, Windows or Mac OS X
+* [Docker](https://docs.docker.com/install/) is already installed on your workstation
+* [Docker Compose](https://docs.docker.com/compose/install/) is already installed on your workstation
+* The [MongoDB Shell](https://docs.mongodb.com/mongodb-shell/install/) is already installed on your workstation to you to issue commands to the running database cluster from your workstation (alternatively use the [MongoDB Compass](https://docs.mongodb.com/compass/current/install/) graphical tool to connect to the cluster)
+
+
+## Build, Run & Connect
 
 1. Launch a command line terminal in the base _envoy-sharded-mongodb_ folder and execute the following command to build and start all the containers in the Docker Compose project:
 ```
@@ -37,7 +40,9 @@ sh.status()
 ```
 _Note_: Use port 27001 instead, above, if you want to connect to the second Envoy endpoint which will connect to the second Mongos. Attempting to configure Envoy to _load balance_ across the two Mongos proxies, to represent them as a _single_ endpoint, will break the MongoDB wire protocol communication between the Shell and the Mongos processes.
 
-# Tips
+
+## Tips
+
 * To show the container logs for the Envoy proxy, run:
 ```
 sudo docker-compose logs front-envoy
